@@ -45,3 +45,7 @@ build/
 *.bak
 *.swp
 *.tmp
+
+# Excel 文件
+result.xlsx
+source.xlsx
