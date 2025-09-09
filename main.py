@@ -14,6 +14,7 @@
 """
 
 import pandas as pd
+import re
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.styles import Alignment, Font, PatternFill, Border, Side
