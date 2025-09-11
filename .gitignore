@@ -35,6 +35,19 @@ dist/
 build/
 *.dist-info/
 
+# PyInstaller 打包相关
+*.spec
+*.manifest
+*.pkg
+*.toc
+warn*.txt
+*.log
+*.pyz
+*.exe.manifest
+
+# 打包配置目录
+pack/
+
 # IDE 和编辑器配置
 .idea/
 .vscode/
@@ -58,6 +71,7 @@ test_*.py
 # 临时文件夹
 temp/
 tmp/
+old/
 
 # 文档文件夹（如果存在）
 docs/
