@@ -25,7 +25,7 @@ pip install -r requirements.txt
 
    方法一（命令行）：
    ```bash
-   python gui_main.py
+   python main.py
    ```
 
    方法二（Windows用户）：
