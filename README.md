@@ -1,5 +1,9 @@
 # 加班数据提取工具
 
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Python](https://img.shields.io/badge/python-3.6+-green.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
 这是一个图形界面应用程序，用于从Excel文件中提取指定研究室的加班数据，并生成格式化的结果文件。
 
 ## 目录结构
@@ -13,7 +17,9 @@
 ├── start_gui.bat        # Windows启动脚本
 ├── requirements.txt     # 依赖包列表
 ├── .gitignore           # Git忽略文件配置
-└── README.md            # 项目说明文档
+├── README.md            # 项目说明文档
+├── CHANGELOG.md         # 更新日志
+└── LICENSE              # 开源许可证
 ```
 
 ## 功能特点
