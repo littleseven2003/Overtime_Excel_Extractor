@@ -2,6 +2,22 @@
 
 这是一个图形界面应用程序，用于从Excel文件中提取指定研究室的加班数据，并生成格式化的结果文件。
 
+## 目录结构
+
+```
+.
+├── src/                 # 源代码目录
+│   ├── main.py          # 应用程序入口
+│   ├── gui.py           # 图形界面模块
+│   └── core.py          # 核心业务逻辑模块
+├── tmp/                 # 临时文件目录
+├── old/                 # 旧版本文件目录
+├── start_gui.bat        # Windows启动脚本
+├── requirements.txt     # 依赖包列表
+├── .gitignore           # Git忽略文件配置
+└── README.md            # 项目说明文档
+```
+
 ## 功能特点
 
 - 图形界面操作，简单易用
@@ -25,7 +41,7 @@ pip install -r requirements.txt
 
    方法一（命令行）：
    ```bash
-   python main.py
+   python src/main.py
    ```
 
    方法二（Windows用户）：
@@ -43,7 +59,7 @@ pip install -r requirements.txt
 
 如果需要使用原始的命令行版本，可以运行：
 ```bash
-python main.py
+python src/main.py
 ```
 
 ## 系统要求

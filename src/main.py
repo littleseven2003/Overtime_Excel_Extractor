@@ -12,7 +12,8 @@ import os
 from PyQt5.QtWidgets import QApplication, QMessageBox
 
 # 添加项目根目录到Python路径，确保可以正确导入项目模块
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# 由于当前文件在src目录下，需要添加上级目录到Python路径
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from gui import OvertimeExtractorApp
 from core import OvertimeDataProcessor
