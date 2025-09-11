@@ -26,9 +26,17 @@ from PyQt5.QtGui import QDragEnterEvent, QDropEvent, QFont
 
 
 class DragDropLabel(QLabel):
-    """支持拖放文件的标签"""
+    """支持拖放文件的标签控件类
+    
+    允许用户通过拖放方式选择Excel文件，提供直观的文件选择体验。
+    """
     
     def __init__(self, parent=None):
+        """初始化拖放标签控件
+        
+        Args:
+            parent: 父级控件，默认为None
+        """
         super().__init__(parent)
         self.setAcceptDrops(True)
         self.setAlignment(Qt.AlignCenter)
@@ -44,6 +52,13 @@ class DragDropLabel(QLabel):
         """)
     
     def dragEnterEvent(self, event: QDragEnterEvent):
+        """处理拖入事件
+        
+        当用户将文件拖拽到标签上时调用此方法，接受包含URL的拖拽数据。
+        
+        Args:
+            event (QDragEnterEvent): 拖入事件对象
+        """
         if event.mimeData().hasUrls():
             # 先接受拖拽动作，具体的文件类型检查在dropEvent中进行
             event.acceptProposedAction()
@@ -51,32 +66,47 @@ class DragDropLabel(QLabel):
             event.ignore()
     
     def dropEvent(self, event: QDropEvent):
+        """处理放下事件
+        
+        当用户在标签上释放拖拽的文件时调用此方法，验证文件类型并设置源文件。
+        
+        Args:
+            event (QDropEvent): 放下事件对象
+        """
         if event.mimeData().hasUrls():
             file_path = event.mimeData().urls()[0].toLocalFile()
             if file_path.lower().endswith(('.xlsx', '.xls')):
-                # Find the main window to call set_source_file
+                # 查找主窗口并调用set_source_file方法
                 main_window = self.window()
                 if hasattr(main_window, 'set_source_file'):
                     main_window.set_source_file(file_path)
             else:
-                # Find the main window for the message box
+                # 查找主窗口并显示错误消息
                 main_window = self.window()
                 QMessageBox.warning(main_window, "文件类型错误", "请选择Excel文件（.xlsx或.xls）")
 
 
 class OvertimeExtractorApp(QMainWindow):
-    """加班数据提取应用程序主窗口"""
+    """加班数据提取应用程序主窗口类
+    
+    提供完整的图形用户界面，包括文件选择、研究室选择、数据处理和日志显示功能。
+    """
     
     def __init__(self):
+        """初始化应用程序主窗口"""
         super().__init__()
-        self.source_file = ""
-        self.output_dir = ""
-        self.selected_labs = []  # 改为列表以支持多选
-        self.research_labs = ['智能通信', '数据算法', '新型能源', '新型材料']
+        self.source_file = ""  # 源文件路径
+        self.output_dir = ""   # 输出目录路径
+        self.selected_labs = []  # 选中的研究室列表
+        self.research_labs = ['智能通信', '数据算法', '新型能源', '新型材料']  # 研究室列表
         self.init_ui()
     
     def init_ui(self):
-        """初始化用户界面"""
+        """初始化用户界面
+        
+        创建和布局所有GUI组件，包括文件选择区域、研究室选择区域、
+        处理按钮和日志显示区域。
+        """
         self.setWindowTitle("加班数据提取工具")
         self.setGeometry(100, 100, 600, 500)
         
@@ -85,7 +115,7 @@ class OvertimeExtractorApp(QMainWindow):
         self.setCentralWidget(central_widget)
         main_layout = QVBoxLayout(central_widget)
         
-        # 标题
+        # 标题标签
         title_label = QLabel("加班数据提取工具")
         title_label.setAlignment(Qt.AlignCenter)
         title_font = QFont()
@@ -112,7 +142,7 @@ class OvertimeExtractorApp(QMainWindow):
         file_button_layout.addWidget(self.select_output_btn)
         file_layout.addLayout(file_button_layout)
         
-        # 文件路径显示
+        # 文件路径显示标签
         self.source_file_label = QLabel("源文件: 未选择")
         self.output_dir_label = QLabel("保存位置: 默认为源文件目录")
         file_layout.addWidget(self.source_file_label)
@@ -124,7 +154,7 @@ class OvertimeExtractorApp(QMainWindow):
         lab_group = QGroupBox("研究室选择")
         lab_layout = QVBoxLayout(lab_group)
         
-        # 创建复选框用于选择研究室（保持原始样式）
+        # 创建复选框用于选择研究室
         self.lab_checkboxes = []
         
         # 使用左右布局形式显示研究室选择和按钮
@@ -199,14 +229,18 @@ class OvertimeExtractorApp(QMainWindow):
         self.statusBar().showMessage("就绪")
     
     def set_source_file(self, file_path):
-        """设置源文件路径"""
+        """设置源文件路径并更新界面显示
+        
+        Args:
+            file_path (str): 源文件的完整路径
+        """
         self.source_file = file_path
         self.source_file_label.setText(f"源文件: {os.path.basename(file_path)}")
         self.statusBar().showMessage(f"已选择源文件: {file_path}")
         self.log_message(f"已选择源文件: {file_path}")
     
     def select_source_file(self):
-        """选择源文件"""
+        """打开文件选择对话框选择源文件"""
         file_path, _ = QFileDialog.getOpenFileName(
             self, 
             "选择源文件", 
@@ -217,7 +251,7 @@ class OvertimeExtractorApp(QMainWindow):
             self.set_source_file(file_path)
     
     def select_output_dir(self):
-        """选择输出目录"""
+        """打开目录选择对话框选择输出目录"""
         dir_path = QFileDialog.getExistingDirectory(self, "选择保存位置")
         if dir_path:
             self.output_dir = dir_path
@@ -226,22 +260,26 @@ class OvertimeExtractorApp(QMainWindow):
             self.log_message(f"已选择保存位置: {dir_path}")
     
     def select_all_labs(self):
-        """全选所有研究室"""
+        """全选所有研究室复选框"""
         for cb in self.lab_checkboxes:
             cb.setChecked(True)
     
     def deselect_all_labs(self):
-        """取消全选所有研究室"""
+        """取消全选所有研究室复选框"""
         for cb in self.lab_checkboxes:
             cb.setChecked(False)
     
     def clear_log(self):
-        """清空日志"""
+        """清空日志显示区域"""
         self.log_text.clear()
         self.log_message("日志已清空")
     
     def log_message(self, message):
-        """添加日志消息"""
+        """在日志区域添加消息并滚动到底部
+        
+        Args:
+            message (str): 要添加到日志的消息
+        """
         self.log_text.append(message)
         self.log_text.verticalScrollBar().setValue(
             self.log_text.verticalScrollBar().maximum()
@@ -249,11 +287,21 @@ class OvertimeExtractorApp(QMainWindow):
         QApplication.processEvents()  # 确保界面及时更新
     
     def process_data(self):
-        """处理数据（需要在子类中实现）"""
+        """处理数据的抽象方法
+        
+        子类必须实现此方法以提供具体的数据处理逻辑。
+        
+        Raises:
+            NotImplementedError: 当子类未实现此方法时抛出
+        """
         raise NotImplementedError("需要在子类中实现process_data方法")
 
 
 def main():
+    """GUI应用程序入口点
+    
+    创建Qt应用程序实例，初始化主窗口并启动事件循环。
+    """
     app = QApplication(sys.argv)
     window = OvertimeExtractorApp()
     window.show()
@@ -261,4 +309,8 @@ def main():
 
 
 if __name__ == "__main__":
+    """程序入口点
+    
+    当脚本直接运行时执行main函数启动应用程序。
+    """
     main()
