@@ -55,9 +55,6 @@ source.xlsx
 test_*.xlsx
 test_*.py
 
-# 旧版本文件
-old.py
-
 # 临时文件夹
 temp/
 tmp/
