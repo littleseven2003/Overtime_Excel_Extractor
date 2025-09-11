@@ -40,6 +40,7 @@ build/
 .vscode/
 *.sublime-workspace
 *.sublime-project
+.codebuddy/
 
 # 其他
 *.bak
@@ -49,3 +50,26 @@ build/
 # Excel 文件
 result.xlsx
 source.xlsx
+
+# 测试文件
+test_*.xlsx
+test_*.py
+
+# 旧版本文件
+old.py
+
+# 临时文件夹
+temp/
+tmp/
+
+# 文档文件夹（如果存在）
+docs/
+documentation/
+
+# 配置文件备份
+*.bak
+config_backup/
+
+# 用户数据文件夹
+user_data/
+personal_data/
