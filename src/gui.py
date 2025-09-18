@@ -98,7 +98,7 @@ class OvertimeExtractorApp(QMainWindow):
         self.source_file = ""  # 源文件路径
         self.output_dir = ""   # 输出目录路径
         self.selected_labs = []  # 选中的研究室列表
-        self.research_labs = ['智能通信', '数据算法', '新型能源', '新型材料']  # 研究室列表
+        self.research_labs = ['智能通信', '数据算法', '新型能源', '新型材料', '智能装备']  # 研究室列表
         self.init_ui()
     
     def init_ui(self):

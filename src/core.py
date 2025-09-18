@@ -117,8 +117,8 @@ class OvertimeDataProcessor:
             result_df['开发室'] = result_df['研究室'].apply(lambda x: f'{x}研究室')
             
             # 4. 按照指定的研究室顺序排序
-            # 研究室顺序：智能通信>数据算法>新型能源>新型材料
-            research_lab_order = ['智能通信', '数据算法', '新型能源', '新型材料']
+            # 研究室顺序：智能通信>数据算法>新型能源>新型材料>智能装备
+            research_lab_order = ['智能通信', '数据算法', '新型能源', '新型材料', '智能装备']
             
             # 创建一个映射字典来定义研究室的排序顺序
             lab_order_dict = {lab: i for i, lab in enumerate(research_lab_order)}
